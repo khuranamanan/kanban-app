@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
-import ReduxProvider from "@/providers/ReduxProvider";
+
 import getBoards from "@/actions/getAllBoards";
 import ToastProvider from "@/providers/ToastProvider";
 import ModalProvider from "@/providers/ModalProvider";
@@ -28,10 +28,8 @@ export default async function RootLayout({
     <html lang="en">
       <body className={figtree.className}>
         <ToastProvider />
-        <ReduxProvider>
-          <ModalProvider />
-          <Sidebar boards={boards}>{children}</Sidebar>
-        </ReduxProvider>
+        <ModalProvider />
+        <Sidebar boards={boards}>{children}</Sidebar>
       </body>
     </html>
   );
