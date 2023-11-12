@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import { HiHome } from "react-icons/hi";
 
 import Box from "./Box";
-// import SidebarItem from "./SidebarItem";
 import { twMerge } from "tailwind-merge";
 import BoardList from "./BoardList";
 import { Board } from "@/types";

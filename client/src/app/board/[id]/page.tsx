@@ -3,6 +3,8 @@ import getColumnsOfBoard from "@/actions/getColumnsOfBoard";
 import Header from "@/components/Header";
 import PageContent from "./components/PageContent";
 
+export const revalidate = 0;
+
 async function BoardPage({ params }: { params: { id: string } }) {
   const board = await getBoardById(params.id);
   const columns = await getColumnsOfBoard(params.id);

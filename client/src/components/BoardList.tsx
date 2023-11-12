@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { TbPlaylist } from "react-icons/tb";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdTableChart } from "react-icons/md";
 import useBoardModal from "@/hooks/useBoardModal";

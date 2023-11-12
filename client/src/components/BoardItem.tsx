@@ -1,6 +1,5 @@
-import { Board, BoardWithColumns } from "@/types";
+import { BoardWithColumns } from "@/types";
 import Button from "./Button";
-import { ReactHTMLElement } from "react";
 
 interface BoardItemProps extends BoardWithColumns {
   onItemClick: (id: string) => void;

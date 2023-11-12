@@ -4,7 +4,7 @@ import deleteBoard from "@/actions/deleteBoard";
 import BoardItem from "@/components/BoardItem";
 import useBoardModal from "@/hooks/useBoardModal";
 import useDeleteConfirmationModal from "@/hooks/useDeleteConfirmationModal";
-import { Board, BoardWithColumns } from "@/types";
+import { BoardWithColumns } from "@/types";
 import { useRouter } from "next/navigation";
 
 interface PageContentProps {
