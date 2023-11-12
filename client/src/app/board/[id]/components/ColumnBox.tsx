@@ -6,6 +6,7 @@ interface ColumnBoxProps extends Column {
   onEditOpen: () => void;
   onDeleteOpen: () => void;
   onItemModalOpen: () => void;
+  placeholder: React.ReactNode;
 }
 
 function ColumnBox({
@@ -15,9 +16,10 @@ function ColumnBox({
   onItemModalOpen,
   items,
   _id,
+  placeholder,
 }: ColumnBoxProps) {
   return (
-    <div className="bg-neutral-400/5 rounded-md overflow-y-auto flex flex-col gap-4 w-60 shrink-0 p-2">
+    <div className="bg-neutral-400/5 rounded-md overflow-y-auto flex flex-col gap-4 w-60 shrink-0 p-2 h-full">
       <div className="flex justify-between items-center border-b pb-1 border-neutral-800 gap-2">
         <h3 className="text-sm text-neutral-300 truncate">{name}</h3>
         <div className="inline-flex gap-2">
@@ -42,9 +44,10 @@ function ColumnBox({
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {items.map((item) => (
-          <TaskItem key={item._id} item={item} columnId={_id} />
+        {items.map((item, index) => (
+          <TaskItem key={item._id} item={item} columnId={_id} index={index} />
         ))}
+        {placeholder}
       </div>
     </div>
   );

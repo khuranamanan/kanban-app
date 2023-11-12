@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
+    "@types/react-beautiful-dnd": "^13.1.7",
     "axios": "^1.6.1",
     "next": "14.0.2",
     "react": "^18",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
     "react-hot-toast": "^2.4.1",

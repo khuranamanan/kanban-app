@@ -8,6 +8,8 @@ import useDeleteConfirmationModal from "@/hooks/useDeleteConfirmationModal";
 import { useRouter } from "next/navigation";
 import deleteColumn from "@/actions/deleteColumn";
 import useItemModal from "@/hooks/useItemModal";
+import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
+import moveItem from "@/actions/moveItem";
 
 interface PageContentProps {
   columns: Column[];
@@ -28,33 +30,53 @@ function PageContent({ columns, boardId }: PageContentProps) {
     }, "Deleting Column will delete all the associated tasks.");
   }
 
-  return (
-    <div className="flex flex-col gap-6 p-4 grow">
-      <div className="flex  flex-col gap-2 md:flex-row md:justify-between md:items-center">
-        <h2 className="text-xl text-neutral-200">Columns</h2>
+  async function onDragEnd(result: DropResult) {
+    console.log(result);
+    if (result.destination && result.destination.droppableId) {
+      await moveItem(result.draggableId, result.destination.droppableId);
+      router.refresh();
+    }
+  }
 
-        <div>
-          <Button
-            className="w-fit py-2 text-sm"
-            onClick={() => onOpen(boardId)}
-          >
-            Add Column
-          </Button>
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <div className="flex flex-col gap-6 p-4 grow">
+        <div className="flex  flex-col gap-2 md:flex-row md:justify-between md:items-center">
+          <h2 className="text-xl text-neutral-200">Columns</h2>
+
+          <div>
+            <Button
+              className="w-fit py-2 text-sm"
+              onClick={() => onOpen(boardId)}
+            >
+              Add Column
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex items-stretch w-full gap-4 grow overflow-x-auto scrollbar">
+          {columns.map((column) => (
+            <Droppable key={column._id} droppableId={column._id}>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="h-full"
+                >
+                  <ColumnBox
+                    {...column}
+                    onEditOpen={() => onEditOpen(column, boardId)}
+                    onDeleteOpen={() => onDeleteOpen(column._id)}
+                    onItemModalOpen={() => onItemModalOpen(column._id)}
+                    placeholder={provided.placeholder}
+                  />
+                </div>
+              )}
+            </Droppable>
+          ))}
         </div>
       </div>
-
-      <div className="flex items-stretch w-full gap-4 grow overflow-x-auto scrollbar">
-        {columns.map((column) => (
-          <ColumnBox
-            key={column._id}
-            {...column}
-            onEditOpen={() => onEditOpen(column, boardId)}
-            onDeleteOpen={() => onDeleteOpen(column._id)}
-            onItemModalOpen={() => onItemModalOpen(column._id)}
-          />
-        ))}
-      </div>
-    </div>
+    </DragDropContext>
   );
 }
 

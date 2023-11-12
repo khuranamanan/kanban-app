@@ -7,13 +7,15 @@ import { Item } from "@/types";
 import { formatDate } from "@/utils/formatDate";
 import { useRouter } from "next/navigation";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { Draggable } from "react-beautiful-dnd";
 
 interface TaskItemProps {
   item: Item;
   columnId: string;
+  index: number;
 }
 
-function TaskItem({ item, columnId }: TaskItemProps) {
+function TaskItem({ item, columnId, index }: TaskItemProps) {
   const { onEditOpen } = useItemModal();
   const { setCallback, onClose } = useDeleteConfirmationModal();
   const router = useRouter();
@@ -31,31 +33,40 @@ function TaskItem({ item, columnId }: TaskItemProps) {
   }
 
   return (
-    <div className="bg-neutral-800 rounded-md flex flex-col gap-4 w-full p-2">
-      <div>
-        {item.dueDate && (
-          <p className="text-neutral-400 text-xs">
-            Due: {formatDate(item.dueDate)}
-          </p>
-        )}
-        <p className="text-white">{item.name}</p>
-        <p className="text-neutral-400 text-xs">{item.description}</p>
-      </div>
-      <div className="inline-flex justify-end gap-2">
-        <button
-          onClick={onEditClick}
-          className="hover:bg-white/10 text-neutral-300 hover:text-white p-1 rounded"
+    <Draggable draggableId={item._id} index={index}>
+      {(provided) => (
+        <div
+          className="bg-neutral-800 rounded-md flex flex-col gap-4 w-full p-2 select-none"
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
         >
-          <AiOutlineEdit />
-        </button>
-        <button
-          onClick={onDeleteClick}
-          className="hover:bg-red-400/10 text-red-400 hover:text-red-500 p-1 rounded"
-        >
-          <AiOutlineDelete />
-        </button>
-      </div>
-    </div>
+          <div>
+            {item.dueDate && (
+              <p className="text-neutral-400 text-xs">
+                Due: {formatDate(item.dueDate)}
+              </p>
+            )}
+            <p className="text-white">{item.name}</p>
+            <p className="text-neutral-400 text-xs">{item.description}</p>
+          </div>
+          <div className="inline-flex justify-end gap-2">
+            <button
+              onClick={onEditClick}
+              className="hover:bg-white/10 text-neutral-300 hover:text-white p-1 rounded"
+            >
+              <AiOutlineEdit />
+            </button>
+            <button
+              onClick={onDeleteClick}
+              className="hover:bg-red-400/10 text-red-400 hover:text-red-500 p-1 rounded"
+            >
+              <AiOutlineDelete />
+            </button>
+          </div>
+        </div>
+      )}
+    </Draggable>
   );
 }
 
