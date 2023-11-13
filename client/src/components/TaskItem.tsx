@@ -5,7 +5,6 @@ import useDeleteConfirmationModal from "@/hooks/useDeleteConfirmationModal";
 import useItemModal from "@/hooks/useItemModal";
 import { Item } from "@/types";
 import { formatDate } from "@/utils/formatDate";
-import { useRouter } from "next/navigation";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { Draggable } from "react-beautiful-dnd";
 
@@ -18,17 +17,15 @@ interface TaskItemProps {
 function TaskItem({ item, columnId, index }: TaskItemProps) {
   const { onEditOpen } = useItemModal();
   const { setCallback, onClose } = useDeleteConfirmationModal();
-  const router = useRouter();
 
   function onEditClick() {
     onEditOpen(item, columnId);
   }
 
-  async function onDeleteClick() {
-    setCallback(() => {
-      deleteItem(item._id);
+  function onDeleteClick() {
+    setCallback(async () => {
+      await deleteItem(item._id);
       onClose();
-      router.refresh();
     }, "The task Item will be deleted.");
   }
 

@@ -23,9 +23,8 @@ function PageContent({ columns, boardId }: PageContentProps) {
   const router = useRouter();
 
   function onDeleteOpen(id: string) {
-    setCallback(() => {
-      deleteColumn(id);
-      router.refresh();
+    setCallback(async () => {
+      await deleteColumn(id);
       onClose();
     }, "Deleting Column will delete all the associated tasks.");
   }

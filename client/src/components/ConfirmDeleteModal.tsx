@@ -17,7 +17,7 @@ function ConfirmDeleteModal() {
   }
 
   async function onDeleteClick() {
-    onDelete();
+    await onDelete();
     router.refresh();
   }
 

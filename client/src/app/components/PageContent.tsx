@@ -24,10 +24,9 @@ function PageContent({ boards }: PageContentProps) {
     router.push(`/board/${id}`);
   }
 
-  async function onDeleteOpen(id: string) {
-    setCallback(() => {
-      deleteBoard(id);
-      router.refresh();
+  function onDeleteOpen(id: string) {
+    setCallback(async () => {
+      await deleteBoard(id);
       onClose();
     }, "Deleting Board will delete all the associated Columns and tasks.");
   }
